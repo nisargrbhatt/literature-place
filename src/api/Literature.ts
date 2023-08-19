@@ -23,6 +23,10 @@ export interface Literature {
      */
     added_by: string;
   };
+  /**
+   * Array of user's uid
+   */
+  likes: string[];
 
   /**
    * Date.toJSON()

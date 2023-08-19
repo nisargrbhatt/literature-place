@@ -16,6 +16,8 @@ import {
   useTheme,
   Button,
   Tooltip,
+  ListItem,
+  Chip,
 } from "@mui/material";
 import { Timestamp, addDoc, onSnapshot } from "firebase/firestore";
 import type { FC } from "react";
@@ -145,11 +147,17 @@ const AddLiteraturePage: FC<Props> = () => {
       status: "pending",
       title: values.title,
       type: values.type,
+      likes: [],
     };
 
     addDoc(collectionRef, litData)
       .then((addedLit) => {
         console.log(addedLit.id);
+        enqueueSnackbar("Literature added successfully", {
+          variant: "success",
+          autoHideDuration: 2 * 1000,
+        });
+        router.push("/");
       })
       .catch((error) => {
         console.error(error);
@@ -235,6 +243,28 @@ const AddLiteraturePage: FC<Props> = () => {
                   onChange={(_, val) => {
                     field.onChange(val?.id);
                   }}
+                  renderOption={(props, option) => (
+                    <ListItem {...props} key={option.id}>
+                      {[
+                        option.first_name,
+                        option?.middle_name,
+                        option?.last_name,
+                      ].join(" ")}
+                    </ListItem>
+                  )}
+                  renderTags={(tagValue, getTagProps) =>
+                    tagValue.map((option, index) => (
+                      <Chip
+                        {...getTagProps({ index })}
+                        key={option.id}
+                        label={[
+                          option.first_name,
+                          option?.middle_name,
+                          option?.last_name,
+                        ].join(" ")}
+                      />
+                    ))
+                  }
                   disablePortal
                   renderInput={(params) => (
                     <TextField

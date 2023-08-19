@@ -103,7 +103,7 @@ const Header: FC<Props> = () => {
           >
             <MenuItem
               onClick={() => {
-                router.push("/add");
+                router.push("/add-literature");
                 handleLitClose();
               }}
             >

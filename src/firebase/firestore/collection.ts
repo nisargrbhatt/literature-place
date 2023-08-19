@@ -1,9 +1,8 @@
 import type { Collections } from "@/api";
-import { getFirestore } from "firebase/firestore";
-import firebase_app from "../config";
 import { collection } from "firebase/firestore";
+import { getDb } from "./db";
 
 export function getCollection(name: Collections) {
-  const db = getFirestore(firebase_app);
+  const db = getDb();
   return collection(db, name);
 }
