@@ -19,7 +19,13 @@ import {
   ListItem,
   Chip,
 } from "@mui/material";
-import { Timestamp, addDoc, onSnapshot } from "firebase/firestore";
+import {
+  Timestamp,
+  addDoc,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import type { FC } from "react";
 import { Fragment, useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -102,15 +108,18 @@ const AddLiteraturePage: FC<Props> = () => {
   useEffect(() => {
     const collectionRef = getCollection("author_collection");
 
-    const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-      setAuthors(
-        () =>
-          snapshot.docs.map((author) => ({
-            ...author.data(),
-            id: author.id,
-          })) as Author[]
-      );
-    });
+    const unsubscribe = onSnapshot(
+      query(collectionRef, where("status", "==", "active")),
+      (snapshot) => {
+        setAuthors(
+          () =>
+            snapshot.docs.map((author) => ({
+              ...author.data(),
+              id: author.id,
+            })) as Author[]
+        );
+      }
+    );
 
     return unsubscribe;
   }, []);

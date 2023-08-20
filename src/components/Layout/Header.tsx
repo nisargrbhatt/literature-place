@@ -29,6 +29,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import PersonIcon from "@mui/icons-material/Person";
 
 const MuiLink = styled(Link)<LinkProps>(({ theme }) => ({
   color: theme.palette.primary.contrastText,
@@ -111,6 +112,17 @@ const Header: FC<Props> = () => {
                 <MenuBookIcon />
               </ListItemIcon>
               <ListItemText>Literature</ListItemText>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                router.push("/add-author");
+                handleLitClose();
+              }}
+            >
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText>Author</ListItemText>
             </MenuItem>
           </Menu>
         </div>

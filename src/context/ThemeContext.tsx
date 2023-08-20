@@ -8,6 +8,8 @@ import { z } from "zod";
 import { getTheme } from "@/lib/theme/mui";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { SnackbarProvider } from "notistack";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const themeSchema = z.enum(["light", "dark"]);
 
@@ -56,10 +58,12 @@ const ThemeContextProvider: FC<Props> = ({ children }) => {
       }}
     >
       <ThemeProvider theme={currentTheme}>
-        <SnackbarProvider>
-          <CssBaseline />
-          {children}
-        </SnackbarProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <SnackbarProvider>
+            <CssBaseline />
+            {children}
+          </SnackbarProvider>
+        </LocalizationProvider>
       </ThemeProvider>
     </ThemeContext.Provider>
   );
